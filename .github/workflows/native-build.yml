@@ -1,0 +1,44 @@
+name: Build Native Images
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            artifact_name: pdf-service-windows.exe
+            output_name: pdf-service.exe
+          - os: macos-latest
+            artifact_name: pdf-service-macos
+            output_name: pdf-service
+          - os: ubuntu-latest
+            artifact_name: pdf-service-linux
+            output_name: pdf-service
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm-community'
+          components: 'native-image'
+          cache: 'maven'
+
+      - name: Build native image
+        run: mvn clean package -DskipTests
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: target/${{ matrix.output_name }}
+          retention-days: 30
