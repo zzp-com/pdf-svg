@@ -33,6 +33,20 @@ jobs:
           components: 'native-image'
           cache: 'maven'
 
+      - name: Install AWT dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |          choco install freetype fontconfig -y
+
+      - name: Install AWT dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |          sudo apt-get update
+          sudo apt-get install -y libfreetype6-dev libfontconfig1-dev libx11-dev libxext-dev libxrender-dev libxtst-dev libxi-dev
+
+      - name: Install AWT dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |          brew install freetype fontconfig
+
+
       - name: Build native image
         run: mvn clean package -DskipTests
 
