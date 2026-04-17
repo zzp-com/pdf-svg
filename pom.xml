@@ -47,6 +47,8 @@
                         <arg>--no-fallback</arg>
                         <arg>-H:+ReportExceptionStackTraces</arg>
                         <arg>--enable-url-protocols=http,https</arg>
+                        <arg>--enable-native-access=ALL-UNNAMED</arg>
+                        <arg>-H:IncludeResources=.*\\.properties$</arg>
                     </buildArgs>
                 </configuration>
             </plugin>
