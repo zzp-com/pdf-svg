@@ -39,8 +39,8 @@ jobs:
 
       - name: Install AWT dependencies (Linux)
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get update
-          sudo apt-get install -y libfreetype6-dev libfontconfig1-dev libx11-dev libxext-dev libxrender-dev libxtst-dev libxi-dev
+        run:  sudo apt-get install -y libfreetype6-dev libfontconfig1-dev libx11-dev libxext-dev libxrender-dev libxtst-dev libxi-dev
+
 
       - name: Install AWT dependencies (macOS)
         if: matrix.os == 'macos-latest'
